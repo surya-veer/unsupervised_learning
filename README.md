@@ -5,6 +5,7 @@ Implementation of K-means
 1) The following project is a part of Innovaccer.Inc.
 2) Given a dataset of various people we need to train model in order to deduplicate the dataset.
 3) The dataset's shape is (103,4).
+4) The project was made on Pycharm Community Edition 2017.3 using Anaconda package manager for all the dependecies.
 
 # REQUIREMENTS
 1) pandas
