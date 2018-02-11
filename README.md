@@ -20,9 +20,11 @@ Implementation of K-means
    each entry. The duplicates are having same cluster numbers.
 4) The clustering is exported to a final.csv file which has all the attributes of training dataset along with the predicted cluster
    numbers appended. (change the path while exporting to csv in line 84)
+
 # OUTPUT 
 1) The training predicts 50 unique clusters.
 2) Final output file is "final.csv" which contains unique members. (as predicted by the model)
+3) The model predicts there are 22 unique people in the given dataset.
 
 # DRAWBACKS
 Could not add weights to some columns such that training improves. Therefore, accuracy score is less but not too below the mark.
