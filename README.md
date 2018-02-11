@@ -20,3 +20,12 @@ Implementation of K-means
    each entry. The duplicates are having same cluster numbers.
 4) The clustering is exported to a final.csv file which has all the attributes of training dataset along with the predicted cluster
    numbers appended. (change the path while exporting to csv in line 84)
+
+# DRAWBACKS
+Could not add weights to some columns such that training improves. Therefore, accuracy score is less but not too below the mark.
+
+# FUTURE WORK
+In order to make the process more efficient:
+1) Select the initial model trained with an optimal parameter of n_clusters_.
+2) Take the unique clusters and form a dataframe with those unique clusters.
+3) Recursively apply K-means with optimal hyperparameter tuning for better results.
