@@ -1,5 +1,5 @@
 # unsupervised_learning
-Implementation of K-means 
+Clustering approach for deduplication.
 
 # PROJECT DESCRIPTION
 1) The following project is a part of Innovaccer.Inc.
