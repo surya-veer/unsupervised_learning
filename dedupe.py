@@ -23,7 +23,7 @@ warnings.filterwarnings("ignore")
 
 # LOAD DATA
 
-train = pd.read_csv("/home/maniac/Desktop/Kaggle/Deduplication/train.csv")
+train = pd.read_csv("data/train.csv")
 final = pd.DataFrame({"ln":train["ln"],"dob":train["dob"],"gn":train["gn"],"fn":train["fn"]},columns=["fn","ln","dob","gn"])
 
 # CHECK DATA
@@ -38,7 +38,6 @@ final = pd.DataFrame({"ln":train["ln"],"dob":train["dob"],"gn":train["gn"],"fn":
 # print(train.isnull().sum())
 
 # PREPROCESSING DATA
-
 train["gn"] = train["gn"].map({"M":1,"F":0})
 train["gn"] = train["gn"].astype(int)
 train["dob"] = train["dob"].apply(lambda x: x.replace("/",""))
@@ -48,23 +47,32 @@ train["dob"] = train["dob"].astype(int)
 
 # print(train.info())
 # print(train["dob"].head())
-#
-train["ln"] = train["ln"].apply(lambda x: x.split())
-train["ln"] = train["ln"].apply(lambda x: "".join(x))
-train["ln"] = train["ln"].apply(lambda x: x.lower())
-train["fn"] = train["fn"].apply(lambda x: x.split())
-train["fn"] = train["fn"].apply(lambda x: "".join(x))
-train["fn"] = train["fn"].apply(lambda x: x.lower())
-#
-# # print(train["ln"])
-import codecs
-def convert(x) :
-    return str(int(codecs.encode(x.encode(),"hex_codec"),base=16)/sys.maxsize)
 
-train["ln"] = train["ln"].apply(lambda x:convert(x))
-train["ln"] = train["ln"].astype(float)
-train["fn"] = train["fn"].apply(lambda x:convert(x))
-train["fn"] = train["fn"].astype(float)
+#encoding data into groups
+def encode(inp):
+    j = 0
+    data = pd.DataFrame()
+    data['index']   = inp
+    data['label'] = inp
+    data['label'][0] = 0
+    for i in range(1,len(data)):
+        if(data['index'][i] in data['index'][i-1]):
+            data['label'][i] = data['label'][i-1]
+        else:
+            j += 1
+            data['label'][i] = j
+    return data['label']
+
+train.sort_values(['fn'],ascending=False,inplace=True)
+train.reset_index(inplace=True)
+train.drop(['index'],1,inplace=True)
+train['fn'] = encode(train['fn'])
+
+train.sort_values(['ln'],ascending=False,inplace=True)
+train.reset_index(inplace=True)
+train.drop(['index'],1,inplace=True)
+train['ln'] = encode(train['ln'])
+
 # print(train.dtypes)
 # print(train["fn"].head())
 # print(train.head(20))
@@ -85,4 +93,4 @@ final.drop_duplicates(subset="Target",inplace=True)
 # print(final.head())
 # print(final.shape)
 # print(final)
-final.to_csv("/home/maniac/Desktop/Kaggle/Deduplication/final.csv")
+final.to_csv("data/final.csv")
