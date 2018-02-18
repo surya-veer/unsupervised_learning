@@ -26,7 +26,8 @@ Clustering approach for deduplication.
 2) Final output file is "final.csv" which contains unique members. (as predicted by the model)
 
 # DRAWBACKS
-Could not add weights to some columns such that training improves. Therefore, accuracy score is less but not too below the mark.
+1) Could not add weights to some columns such that training improves. Therefore, accuracy score is less but not too below the mark.
+2) Inefficient preprocessing of textual data.
 
 # FUTURE WORK
 In order to make the process more efficient:
