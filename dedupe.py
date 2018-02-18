@@ -73,19 +73,24 @@ train.reset_index(inplace=True)
 train.drop(['index'],1,inplace=True)
 train['ln'] = encode(train['ln'])
 
-# print(train.dtypes)
-# print(train["fn"].head())
-# print(train.head(20))
-# print(train.info())
+# scaling of data
+from sklearn import preprocessing
+training_data = np.array(train[['fn','ln','gn','dob']])
+scaler = preprocessing.StandardScaler().fit(training_data)
+training_data = scaler.transform(training_data)
 
-# MODELLING
+#giving specific weight to some feature but it is not necessary here because all feature have same contribution 
+# weight = 5000000    #specify using trial and error method 
+# training_data[:,3] = training_data[:,3]*weight
+
 
 from sklearn.cluster import KMeans
 
 n_cluster = len(train.index)
 kmn = KMeans(n_clusters=n_cluster)
-kmn.fit(train)
-target = kmn.predict(train)
+
+kmn.fit(training_data)
+target = kmn.predict(training_data)
 final["Target"] = target
 # print(final)
 print(len(final["Target"].unique()))
