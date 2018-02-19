@@ -82,6 +82,24 @@ train['ln'] = encode(train['ln'])
 
 from sklearn.cluster import KMeans
 
+
+def optimal_k(X,k_start,k_end):
+    distortions = []
+    K = range(k_start,k_end)
+    for k in K:
+        kmn = KMeans(n_clusters=k).fit(X)
+        kmn.fit(X)
+        distortions.append(sum(np.min(cdist(X, kmn.cluster_centers_, 'euclidean'), axis=1)) / X.shape[0]*1000)
+
+    import matplotlib.pyplot as plt
+    plt.plot(K, distortions, 'bx-')
+    plt.xlabel('k')
+    plt.ylabel('Distortion')
+    plt.title('The Elbow Method showing the optimal k')
+    plt.show()
+#choose any value of k_start and k_end for getting optimal value of k in this range 
+optimal_k(training_data,40,n_cluster)
+
 n_cluster = len(train.index)
 kmn = KMeans(n_clusters=n_cluster)
 kmn.fit(train)
