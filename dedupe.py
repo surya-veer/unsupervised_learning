@@ -4,6 +4,7 @@
 import numpy as np
 import sys
 import pandas as pd
+from scipy.spatial.distance import cdist
 pd.set_option("display.height",2000)
 pd.set_option("display.max_rows",2000)
 pd.set_option("display.max_columns",2000)
@@ -85,7 +86,7 @@ training_data = scaler.transform(training_data)
 
 
 from sklearn.cluster import KMeans
-
+n_cluster = len(train.index)
 
 def optimal_k(X,k_start,k_end):
     distortions = []
@@ -104,7 +105,6 @@ def optimal_k(X,k_start,k_end):
 #choose any value of k_start and k_end for getting optimal value of k in this range 
 optimal_k(training_data,40,n_cluster)
 
-n_cluster = len(train.index)
 kmn = KMeans(n_clusters=n_cluster)
 
 kmn.fit(training_data)
